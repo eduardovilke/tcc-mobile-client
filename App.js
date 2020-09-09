@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
     color: '#4fb4c8',
     width: 146,
     height: 46,
-    paddingTop: 12,
-    paddingLeft: 25
-    
+    paddingTop: 14,
+    paddingLeft: 28
   }
 });
