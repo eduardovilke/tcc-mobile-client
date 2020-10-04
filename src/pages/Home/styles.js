@@ -56,7 +56,7 @@ export default StyleSheet.create({
         justifyContent: 'center'
       },
       textCadastrar: {
-        backgroundColor: 'white',
+        backgroundColor: '#f7f9fa',
         borderRadius: 5,
         color: '#4fb4c8',
         width: 146,

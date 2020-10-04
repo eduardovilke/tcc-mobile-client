@@ -35,5 +35,8 @@ export default StyleSheet.create({
     },
     forgotPassword: {
       color: '#2c88d9'
+    },
+    inputEmail: {
+      color: 'red'
     }
 });

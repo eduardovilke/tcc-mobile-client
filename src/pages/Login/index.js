@@ -33,7 +33,7 @@ export default function Login(){
             </View>
             <View style={styles.inputs}>
                 <Item style={styles.inputEmail}>
-                    <Input placeholder="Ex: maria@gmail.com" />
+                    <Input style={styles.inputEmail} placeholder="Ex: maria@gmail.com" />
                     </Item>
                     <Item style={styles.inputPassword}>
                     <Input 
