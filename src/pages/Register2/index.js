@@ -17,6 +17,10 @@ export default function Register2(){
     navigation.navigate('Register');
   }
 
+  function navigateToNext(){
+    navigation.navigate('HomeUser')
+  }
+
   function setPhoneText(text){
     setPhoneBR(text);
   }
@@ -75,7 +79,10 @@ export default function Register2(){
         </View>
 
         <View style={styles.footer}>
-            <TouchableOpacity style={styles.btnContinuar}>
+            <TouchableOpacity 
+              style={styles.btnContinuar}
+              onPress={ navigateToNext }
+            >
             <Text style={styles.txtContinuar} >SALVAR</Text>
             </TouchableOpacity>
         </View>
