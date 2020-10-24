@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Register2 from './pages/Register2';
-import HomeUser from './pages/HomeUser';
+import Feed from './pages/Feed';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +24,7 @@ export default function Routes() {
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Register2" component={Register2}/>
-        <Stack.Screen name="HomeUser" component={HomeUser}/>
+        <Stack.Screen name="Feed" component={Feed}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

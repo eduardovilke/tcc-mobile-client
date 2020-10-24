@@ -18,7 +18,7 @@ export default function Register2(){
   }
 
   function navigateToNext(){
-    navigation.navigate('HomeUser')
+    navigation.navigate('Feed')
   }
 
   function setPhoneText(text){
