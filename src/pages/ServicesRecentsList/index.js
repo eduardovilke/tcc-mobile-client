@@ -65,7 +65,7 @@ export default function servicesRecentsList(){
                   : <FontAwesome5 name="calendar-check" size={28} color="#f7c325" />
                 } 
                 
-            </View>
+              </View>
             
             <Text style={styles.serviceProperty}>Descrição</Text>
             <Text style={styles.serviceValue}>{item.description}</Text>
