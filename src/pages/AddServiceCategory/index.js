@@ -11,7 +11,7 @@ import {
   FontAwesome
 } from '@expo/vector-icons';
 
-export default function AddService(){
+export default function AddServiceCategory(){
   const data = [
     {
       id: "1",
