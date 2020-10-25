@@ -2,11 +2,11 @@ import * as React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import ServicesRecentsList from '../ServicesRecentsList/index';
-import AddServiceCategory from '../AddServiceCategory/index';
+import AddServiceStackScreen from '../../AddServiceStackScreen';
 
 const ServicesRecentsRoute = () => <ServicesRecentsList />;
 
-const AddServiceRoute = () => <AddServiceCategory />;
+const AddServiceRoute = () => <AddServiceStackScreen />;
 
 const RecentsRoute = () => <Text>Recents</Text>;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
@@ -11,7 +11,7 @@ import {
   FontAwesome
 } from '@expo/vector-icons';
 
-export default function AddServiceCategory(){
+export default function AddServiceCategory({ navigation }){
   const data = [
     {
       id: "1",
@@ -53,7 +53,7 @@ export default function AddServiceCategory(){
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.2}
         renderItem={({item: item}) => (
-          <TouchableOpacity style={styles.service}>
+          <TouchableOpacity style={styles.service} onPress={() => navigation.navigate('AddServiceInformations')}>
             <View style={styles.icons}>
               {
                   (item.icon == 'energy') ? <SimpleLineIcons name="energy" size={35} color="#4fb4c8" />
