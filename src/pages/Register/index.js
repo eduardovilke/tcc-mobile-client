@@ -10,6 +10,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Register(){
 
   const [hidePassword, setHidePassword] = useState(true);
+  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const navigation = useNavigation();
 
@@ -22,7 +26,12 @@ export default function Register(){
   }
 
   function navigateToNext(){
-    navigation.navigate('Register2');
+    navigation.navigate('Register2', {
+      name: name,
+      lastName: lastName,
+      email: email,
+      password: password
+    });
   }
 
   return(
@@ -41,23 +50,33 @@ export default function Register(){
           <View style={styles.names}>
 
             <Item style={styles.nome}>
-              <Input placeholder="Nome" />
+              <Input 
+                placeholder="Nome" 
+                onChangeText={setName}
+              />
             </Item>
 
             <Item style={styles.sobrenome}>
-              <Input placeholder="Sobrenome" />
+              <Input 
+                placeholder="Sobrenome" 
+                onChangeText={setLastName}
+              />
             </Item>
 
           </View>
 
           <Item style={styles.email}>
-            <Input placeholder="Email" />
+            <Input 
+              placeholder="Email"
+              onChangeText={setEmail}
+            />
           </Item>
 
           <Item style={styles.inputPassword}>
             <Input 
               placeholder="Senha" 
               secureTextEntry={hidePassword}
+              onChangeText={setPassword}
             />
             <Entypo 
               onPress={setPasswordVisibility} 
