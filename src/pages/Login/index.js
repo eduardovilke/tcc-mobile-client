@@ -1,14 +1,36 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TouchableOpacity, ToastAndroid, AsyncStorage} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Feather, AntDesign, Entypo} from '@expo/vector-icons'
 import { Item, Input } from 'native-base';
 
 import styles from './styles';
 
+import api from '../services/api';
+
 export default function Login(){
 
     const [hidePassword, setHidePassword] = useState(true);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleSignInPress(){
+        if(!email || !password){
+            ToastAndroid.show("E-mail e senha deve ser preenchido.", ToastAndroid.SHORT);
+        }else{
+            try {
+                const response = await api.post('/sessions', {
+                    email: email,
+                    senha: password
+                })
+
+                await AsyncStorage.setItem('@TccClienteApp:token', response.data.token);
+                navigation.navigate('Feed')
+            } catch (error) {
+                ToastAndroid.show("E-mail ou senha inválidos.", ToastAndroid.SHORT);
+            }
+        }
+    }
 
     const navigation = useNavigation();
 
@@ -33,12 +55,17 @@ export default function Login(){
             </View>
             <View style={styles.inputs}>
                 <Item style={styles.inputEmail}>
-                    <Input style={styles.inputEmail} placeholder="Ex: maria@gmail.com" />
+                    <Input 
+                        style={styles.inputEmail} 
+                        placeholder="Ex: maria@gmail.com" 
+                        onChangeText={setEmail}
+                    />
                     </Item>
                     <Item style={styles.inputPassword}>
                     <Input 
                         placeholder="Senha" 
                         secureTextEntry={hidePassword}
+                        onChangeText={setPassword}
                     />
                     <Entypo 
                         onPress={setPasswordVisibility} 
@@ -50,7 +77,11 @@ export default function Login(){
             </View>
             <View style={styles.footer}>
                 <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
-                <AntDesign name="rightcircle" size={48} color="#4b5c6b"/>
+                <TouchableOpacity 
+                    onPress={handleSignInPress}
+                >
+                    <AntDesign name="rightcircle" size={48} color="#4b5c6b"/>
+                </TouchableOpacity>
             </View>
         </View>
     );

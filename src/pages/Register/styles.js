@@ -47,6 +47,24 @@ export default StyleSheet.create({
     inputEmail: {
       color: 'red'
     },
+    telefone:{
+      paddingTop: 30
+    },
+    cep: {
+      paddingTop: 30
+    },
+    cidade: {
+      paddingTop: 30
+    },
+    rua: {
+      paddingTop: 30
+    },
+    bairro: {
+      paddingTop: 30
+    },
+    numero: {
+      paddingTop: 30
+    },
     btnContinuar: {
       backgroundColor: '#4fb4c8',
       alignItems: 'center',

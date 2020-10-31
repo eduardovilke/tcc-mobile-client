@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Register2({route}){
 
-  // const user = JSON.stringify(route.params)
+  const user = JSON.stringify(route.params)
   // console.log('USER: ', user, {user: user,
   // phone: phone,
   // cep: cep,
@@ -18,12 +18,7 @@ export default function Register2({route}){
   // neighborhood: neighborhood,
   // number: number})
   
-  const [phone, setPhone] = useState('')
-  const [cep, setCep] = useState('')
-  const [city, setCity] = useState('')
-  const [street, setStreet] = useState('')
-  const [neighborhood, setNeighborhood] = useState('')
-  const [number, setNumber] = useState('')
+
   
   const navigation = useNavigation();
   
@@ -50,54 +45,7 @@ export default function Register2({route}){
       </View>
       <ScrollView>
         <View style={styles.inputs}>
-          <View style={styles.names}>
-
-            <Item style={styles.telefone}>
-              <Input 
-                placeholder="Celular" 
-                keyboardType={'numeric'}
-                value={phoneBR}
-                onChangeText={setPhone}
-              />
-            </Item>
-
-            <Item style={styles.cep}>
-              <Input 
-                placeholder="CEP" 
-                keyboardType={'numeric'}
-                onChangeText={setCep}
-              />
-            </Item>
-
-          </View>
-
-          <Item style={styles.cidade}>
-            <Input 
-              placeholder="Cidade" 
-              onChangeText={setCity}
-            />
-          </Item>
-
-          <Item style={styles.rua}>
-            <Input 
-              placeholder="Rua" 
-              onChangeText={setStreet}
-            />
-          </Item>
-
-          <Item style={styles.bairro}>
-            <Input 
-              placeholder="Bairro" 
-              onChangeText={setNeighborhood}
-            />
-          </Item>
-
-          <Item style={styles.numero}>
-            <Input 
-              placeholder="Número" 
-              onChangeText={setNumber}
-            />
-          </Item>
+          
 
         </View>
 

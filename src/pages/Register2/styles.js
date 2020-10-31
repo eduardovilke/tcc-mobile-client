@@ -24,23 +24,7 @@ export default StyleSheet.create({
     },
     names: {
     },
-    telefone:{
-    },
-    cep: {
-      paddingTop: 30
-    },
-    cidade: {
-      paddingTop: 30
-    },
-    rua: {
-      paddingTop: 30
-    },
-    bairro: {
-      paddingTop: 30
-    },
-    numero: {
-      paddingTop: 30
-    },
+    
     footer: {
       paddingTop: 60,
       paddingBottom: 10,

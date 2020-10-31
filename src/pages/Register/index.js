@@ -7,6 +7,8 @@ import { Item, Input } from 'native-base';
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import api from '../services/api'
+
 export default function Register(){
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -14,6 +16,12 @@ export default function Register(){
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
+  const [cep, setCep] = useState('')
+  const [city, setCity] = useState('')
+  const [street, setStreet] = useState('')
+  const [neighborhood, setNeighborhood] = useState('')
+  const [number, setNumber] = useState('')
 
   const navigation = useNavigation();
 
@@ -25,15 +33,25 @@ export default function Register(){
     navigation.navigate('Home');
   }
 
-  function navigateToNext(){
-    navigation.navigate('Register2', {
-      name: name,
-      lastName: lastName,
-      email: email,
-      password: password
-    });
+  async function navigateToNext(){
+    try {
+      await api.post('/cliente', {
+        nome: name,
+        sobrenome: lastName,
+        email: email,
+        telefone: phone,
+        cep: cep,
+        cidade: city,
+        rua: street,
+        bairro: neighborhood,
+        numero: number,
+        senha: password
+      })
+      navigation.navigate('Feed')
+    } catch (error) {
+      console.error(error);
+    }
   }
-
   return(
     <KeyboardAvoidingView style={styles.background} behavior="height">
       <View style={styles.header}>
@@ -98,6 +116,55 @@ export default function Register(){
               color="#4b5c6b"
             />
           </Item>
+
+          <View style={styles.names}>
+
+            <Item style={styles.telefone}>
+              <Input 
+                placeholder="Celular" 
+                keyboardType={'numeric'}
+                onChangeText={setPhone}
+              />
+            </Item>
+
+            <Item style={styles.cep}>
+              <Input 
+                placeholder="CEP" 
+                keyboardType={'numeric'}
+                onChangeText={setCep}
+              />
+            </Item>
+
+          </View>
+
+          <Item style={styles.cidade}>
+            <Input 
+              placeholder="Cidade" 
+              onChangeText={setCity}
+            />
+          </Item>
+
+          <Item style={styles.rua}>
+            <Input 
+              placeholder="Rua" 
+              onChangeText={setStreet}
+            />
+          </Item>
+
+          <Item style={styles.bairro}>
+            <Input 
+              placeholder="Bairro" 
+              onChangeText={setNeighborhood}
+            />
+          </Item>
+
+          <Item style={styles.numero}>
+            <Input 
+              placeholder="Número" 
+              onChangeText={setNumber}
+            />
+          </Item>
+
         </View>
         <View style={styles.footer}>
             <TouchableOpacity style={styles.btnContinuar} onPress={navigateToNext}>

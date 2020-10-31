@@ -18,11 +18,6 @@ export default function PageSuccess({ navigation }){
         source={success}
         autoPlay
       />
-      <TouchableOpacity 
-        style={styles.button}
-      >
-        <Text style={styles.txtButton}>Voltar ao menu principal</Text>
-      </TouchableOpacity>
     </View>
   )
 }
