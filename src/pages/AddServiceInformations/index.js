@@ -33,8 +33,10 @@ export default function AddServiceInformations({ navigation }){
       <View style={styles.problemDescription}>
         <Textarea rowSpan={5} bordered placeholder="Descreva aqui seu problema" />
       </View>
-
+      
+      <Text>Prioridade:</Text>
       <View style={styles.priorities}>
+        
         <View style={styles.prioritiesOptions}>
           <RadioButton
             value="baixo"
