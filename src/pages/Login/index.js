@@ -24,8 +24,13 @@ export default function Login(){
                     senha: password
                 })
 
-                await AsyncStorage.setItem('@TccClienteApp:token', response.data.token);
-                navigation.navigate('Feed')
+                const services = await api.get(`servico/${response.data.user[0].id}`)
+                    
+                navigation.navigate('Feed', {
+                    user: response.data.user[0],
+                    listServices: services.data,
+                })
+                
             } catch (error) {
                 ToastAndroid.show("E-mail ou senha inválidos.", ToastAndroid.SHORT);
             }

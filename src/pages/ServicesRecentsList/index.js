@@ -3,44 +3,28 @@ import {View, FlatList, TouchableOpacity, Text} from 'react-native';
 import {Feather, AntDesign, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 
 import styles from './styles';
+import categoryMap from '../../utils/categoryMap'
 
-export default function servicesRecentsList({ navigation }){
-  const data = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      category: "Serviços Hidráulicos",
-      description: "Minha torneira está com vazamento, preciso que seja feita uma manutenção",
-      professional: "João",
-      situation: "finalizado"
-    },
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b",
-      category: "Serviços Hidráulico",
-      description: "Minha torneira está com vazamento, preciso que seja feita uma manutenção",
-      professional: "João",
-      situation: "agendado"
-    },
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28",
-      category: "Serviços Hidráulic",
-      description: "Minha torneira está com vazamento, preciso que seja feita uma manutenção",
-      professional: "João",
-      situation: "aberto"
-    },
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb",
-      category: "Serviços Hidráuli",
-      description: "Minha torneira está com vazamento, preciso que seja feita uma manutenção",
-      professional: "João",
-      situation: "finalizado"
-    }  
-  ]
+export default function servicesRecentsList(props){
+  console.log('SERVICOS ', props.services)
+
+  const data = []
+
+  props.services.forEach(servicos => {
+    data.push({
+      id: `${servicos.id}`,
+      category: categoryMap[`${servicos.tipos_servico_id}`],
+      description: servicos.descricao,
+      professional: servicos.prestador_id,
+      situation: servicos.situacao_id
+    })
+  })
   
   return(
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>
-          Bem Vind@! Maria
+          Bem Vind@! {props.user.nome}
         </Text>
         <Text style={styles.subTitle}>
             Aqui estão suas conversas recentes
@@ -59,9 +43,9 @@ export default function servicesRecentsList({ navigation }){
                 <Text style={styles.serviceValue}>{item.category}</Text>
 
                 { 
-                  (item.situation == 'finalizado') 
+                  (item.situation == 3) 
                   ? <AntDesign name="check" size={30} color="green" />
-                  : (item.situation == 'aberto') ? <MaterialCommunityIcons name="calendar-clock" size={30} color="#d6d2c9" />
+                  : (item.situation == 1) ? <MaterialCommunityIcons name="calendar-clock" size={30} color="#d6d2c9" />
                   : <FontAwesome5 name="calendar-check" size={28} color="#f7c325" />
                 } 
                 

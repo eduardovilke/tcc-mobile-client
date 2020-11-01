@@ -4,16 +4,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import ServicesRecentsList from '../ServicesRecentsList/index';
 import AddServiceStackScreen from '../../AddServiceStackScreen';
 
-const ServicesRecentsRoute = () => <ServicesRecentsList />;
-
 const AddServiceRoute = () => <AddServiceStackScreen />;
 
 const RecentsRoute = () => <Text>Recents</Text>;
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function Feed(){
-    
+export default function Feed({route}){
+  const user = route.params.user
+  const services = route.params.listServices
+
+  const ServicesRecentsRoute = () => <ServicesRecentsList user={user} services={services}/>;
   return(
     <Tab.Navigator
       initialRouteName="Feed"
