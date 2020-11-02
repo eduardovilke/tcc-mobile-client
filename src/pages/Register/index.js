@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {Feather, AntDesign, Entypo} from '@expo/vector-icons'
+import {View, Text, KeyboardAvoidingView, ScrollView, ToastAndroid} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Feather, Entypo} from '@expo/vector-icons'
 import { Item, Input } from 'native-base';
 
 import styles from './styles';
@@ -47,7 +47,8 @@ export default function Register(){
         numero: number,
         senha: password
       })
-      navigation.navigate('Feed')
+      ToastAndroid.show("Conta criada com sucesso!", ToastAndroid.SHORT);
+      navigation.navigate('Home')
     } catch (error) {
       console.error(error);
     }
