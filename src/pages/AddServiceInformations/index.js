@@ -1,15 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import { Item, Input, Textarea } from 'native-base';
 import { RadioButton } from 'react-native-paper';
 
 import { 
-  SimpleLineIcons, Feather } from '@expo/vector-icons';
+  Feather,
+  SimpleLineIcons, 
+  MaterialCommunityIcons, 
+  Entypo, 
+  Octicons, 
+  FontAwesome
+} from '@expo/vector-icons';
 
 import styles from './styles'
 
-export default function AddServiceInformations({ navigation }){
-
+export default function AddServiceInformations({ navigation, route }){
+  console.log('entrou no addservice informations', route.params.item.nome)
   const [checked, setChecked] = React.useState('baixo');
 
   return(
@@ -22,8 +28,15 @@ export default function AddServiceInformations({ navigation }){
       />
       
       <View style={styles.header}>
-        <SimpleLineIcons name="energy" size={35} color="#4fb4c8" />
-        <Text style={styles.title}>Serviços Elétricos</Text>
+
+      {
+        (route.params.item.id == 2) ? <SimpleLineIcons name="energy" size={35} color="#4fb4c8" />
+        : (route.params.item.id == 1) ? <MaterialCommunityIcons name="pipe-leak" size={35} color="#4fb4c8" />
+        : (route.params.item.id == 3) ? <Entypo name="tree" size={35} color="#4fb4c8" />
+        : (route.params.item.id == 4) ? <Octicons name="paintcan" size={35} color="#4fb4c8" />
+        : <FontAwesome name="key" size={35} color="#4fb4c8" />
+      }
+        <Text style={styles.title}>{route.params.item.nome}</Text>
       </View>
 
       <Item style={styles.problemTitle}>

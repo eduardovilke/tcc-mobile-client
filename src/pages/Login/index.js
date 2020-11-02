@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, ToastAndroid, AsyncStorage} from 'react-native';
+import {View, Text, TouchableOpacity, ToastAndroid} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Feather, AntDesign, Entypo} from '@expo/vector-icons'
 import { Item, Input } from 'native-base';
 
@@ -24,11 +25,14 @@ export default function Login(){
                     senha: password
                 })
 
+                const jsonValue = JSON.stringify(response.data.user[0])
+                await AsyncStorage.setItem('@user', jsonValue)
+                
                 const services = await api.get(`servico/${response.data.user[0].id}`)
-                    
+                        
                 navigation.navigate('Feed', {
                     user: response.data.user[0],
-                    listServices: services.data,
+                    listServices: services.data
                 })
                 
             } catch (error) {

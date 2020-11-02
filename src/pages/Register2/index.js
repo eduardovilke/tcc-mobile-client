@@ -10,19 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Register2({route}){
 
   const user = JSON.stringify(route.params)
-  // console.log('USER: ', user, {user: user,
-  // phone: phone,
-  // cep: cep,
-  // city: city,
-  // street: street,
-  // neighborhood: neighborhood,
-  // number: number})
-  
-
-  
   const navigation = useNavigation();
-  
-  const [phoneBR, setPhoneBR] = useState('');
 
   function navigateToBack(){
     navigation.navigate('Register');

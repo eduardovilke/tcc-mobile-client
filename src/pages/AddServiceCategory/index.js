@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, FlatList, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 
@@ -11,59 +12,75 @@ import {
   FontAwesome
 } from '@expo/vector-icons';
 
+import api from '../services/api';
+
 export default function AddServiceCategory({ navigation }){
-  const data = [
+
+  const categories = [
     {
-      id: "1",
-      name: "Serviços elétricos",
-      icon: 'energy'
+      id: 1,
+      nome: 'Serviços hidráulicos'
     },
     {
-      id: "2",
-      name: "Serviços Hidráulicos",
-      icon: 'pipe-leak'
+      id: 2,
+      nome: 'Serviços elétricos'
     },
     {
-      id: "3",
-      name: "Jardinagem",
-      icon: 'tree'
+      id: 3,
+      nome: 'Jardinagem'
     },
     {
-      id: "4",
-      name: "Pequenas pinturas",
-      icon: 'paintcan'
+      id: 4,
+      nome: 'Pequenas pinturas'
     },
     {
-      id: "5",
-      name: "Troca de fechaduras",
-      icon: 'key'
+      id: 5,
+      nome: 'Troca de fechaduras'
     }
   ]
+
+  const [nameUser, setNameUser] = useState('')
+
+  async function loadUser(){
+    const jsonValue = await AsyncStorage.getItem('@user')
+    const user = jsonValue != null ? JSON.parse(jsonValue) : null;
+
+    setNameUser(user.nome)
+  }
+  function navigateToNext(item){
+    navigation.navigate('AddServiceInformations', {item});
+  }
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   return(
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Maria</Text>
+        <Text style={styles.title}>{nameUser}</Text>
         <Text style={styles.subTitle} >Para continuar com a busca, selecione qual categoria deseja</Text>
       </View>
 
       <FlatList
-        data={data}
+        data={categories}
         style={styles.serviceList}
         showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={0.2}
         renderItem={({item: item}) => (
-          <TouchableOpacity style={styles.service} onPress={() => navigation.navigate('AddServiceInformations')}>
+          <TouchableOpacity 
+            style={styles.service} 
+            onPress={() => navigateToNext(item)}
+          >
             <View style={styles.icons}>
               {
-                  (item.icon == 'energy') ? <SimpleLineIcons name="energy" size={35} color="#4fb4c8" />
-                : (item.icon == 'pipe-leak') ? <MaterialCommunityIcons name="pipe-leak" size={35} color="#4fb4c8" />
-                : (item.icon == 'tree') ? <Entypo name="tree" size={35} color="#4fb4c8" />
-                : (item.icon == 'paintcan') ? <Octicons name="paintcan" size={35} color="#4fb4c8" />
+                  (item.id == 2) ? <SimpleLineIcons name="energy" size={35} color="#4fb4c8" />
+                : (item.id == 1) ? <MaterialCommunityIcons name="pipe-leak" size={35} color="#4fb4c8" />
+                : (item.id == 3) ? <Entypo name="tree" size={35} color="#4fb4c8" />
+                : (item.id == 4) ? <Octicons name="paintcan" size={35} color="#4fb4c8" />
                 : <FontAwesome name="key" size={35} color="#4fb4c8" />
               }
             </View>
-            <Text style={styles.nameService}>{item.name}</Text>
+            <Text style={styles.nameService}>{item.nome}</Text>
           </TouchableOpacity>
         )}
       />

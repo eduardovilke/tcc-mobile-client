@@ -6,10 +6,8 @@ import styles from './styles';
 import categoryMap from '../../utils/categoryMap'
 
 export default function servicesRecentsList(props){
-  console.log('SERVICOS ', props.services)
 
   const data = []
-
   props.services.forEach(servicos => {
     data.push({
       id: `${servicos.id}`,
@@ -35,7 +33,6 @@ export default function servicesRecentsList(props){
         data={data}
         style={styles.serviceList}
         showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={0.2}
         renderItem={({item: item}) => (
           <View style={styles.service}>
             <Text style={styles.serviceProperty}>Categoria</Text>
