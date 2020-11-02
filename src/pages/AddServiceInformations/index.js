@@ -18,7 +18,7 @@ import api from '../services/api'
 
 export default function AddServiceInformations({ navigation, route }){
   
-  const [checked, setChecked] = React.useState('baixo');
+  const [checked, setChecked] = useState('baixo');
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [idUser, setIdUser] = useState('')
