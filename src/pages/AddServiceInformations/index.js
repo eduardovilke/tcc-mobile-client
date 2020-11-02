@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, ToastAndroid} from 'react-native';
 import { Item, Input, Textarea } from 'native-base';
 import { RadioButton } from 'react-native-paper';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { 
   Feather,
   SimpleLineIcons, 
@@ -14,9 +14,42 @@ import {
 
 import styles from './styles'
 
+import api from '../services/api'
+
 export default function AddServiceInformations({ navigation, route }){
-  console.log('entrou no addservice informations', route.params.item.nome)
+  
   const [checked, setChecked] = React.useState('baixo');
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [idUser, setIdUser] = useState('')
+
+  async function addServiceInApi(){
+    if(!title || !description){
+      ToastAndroid.show("Preencha as informações do serviço", ToastAndroid.SHORT);
+    }else{
+      try {
+
+        const jsonValue = await AsyncStorage.getItem('@user')
+        const user = jsonValue != null ? JSON.parse(jsonValue) : null;
+
+        setIdUser(user.id)
+
+        await api.post('servico', {
+          nome: title,
+          descricao: description,
+          tipos_servico_id: `${route.params.item.id}`,
+          situacao_id: "1",
+          cliente_id: idUser
+        })
+        navigation.navigate('PageSuccess')
+
+      } catch (error) {
+        console.log(error)
+        ToastAndroid.show("Houve algum problema. Contate o suporte.", ToastAndroid.SHORT);
+
+      }
+    }
+  }
 
   return(
     <View style={styles.container}>
@@ -40,11 +73,19 @@ export default function AddServiceInformations({ navigation, route }){
       </View>
 
       <Item style={styles.problemTitle}>
-        <Input placeholder="Ex: Torneira vazando" />
+        <Input 
+          placeholder="Ex: Torneira vazando" 
+          onChangeText={setTitle}
+        />
       </Item>
 
       <View style={styles.problemDescription}>
-        <Textarea rowSpan={5} bordered placeholder="Descreva aqui seu problema" />
+        <Textarea 
+          rowSpan={5} 
+          bordered 
+          placeholder="Descreva aqui seu problema" 
+          onChangeText={setDescription}
+        />
       </View>
       
       <Text>Prioridade:</Text>
@@ -81,7 +122,7 @@ export default function AddServiceInformations({ navigation, route }){
 
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('PageSuccess')}
+        onPress={addServiceInApi}
       >
         <Text style={styles.txtButton}>Buscar</Text>
       </TouchableOpacity>
