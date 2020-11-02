@@ -27,12 +27,9 @@ export default function Login(){
 
                 const jsonValue = JSON.stringify(response.data.user[0])
                 await AsyncStorage.setItem('@user', jsonValue)
-                
-                const services = await api.get(`servico/${response.data.user[0].id}`)
                         
                 navigation.navigate('Feed', {
-                    user: response.data.user[0],
-                    listServices: services.data
+                    user: response.data.user[0]
                 })
                 
             } catch (error) {

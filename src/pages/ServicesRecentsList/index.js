@@ -1,22 +1,33 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, FlatList, TouchableOpacity, Text} from 'react-native';
 import {Feather, AntDesign, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 
 import styles from './styles';
 import categoryMap from '../../utils/categoryMap'
 
+import api from '../services/api'
+
 export default function servicesRecentsList(props){
 
-  const data = []
-  props.services.forEach(servicos => {
-    data.push({
-      id: `${servicos.id}`,
-      category: categoryMap[`${servicos.tipos_servico_id}`],
-      description: servicos.descricao,
-      professional: servicos.prestador_id,
-      situation: servicos.situacao_id
+  const [data, setData] = useState([])
+
+  async function loadService(){
+    const services = await api.get(`servico/${props.user.id}`)
+    services.data.forEach(item => {
+      const service = [{
+        id: `${item.id}`,
+        category: categoryMap[`${item.tipos_servico_id}`],
+        description: item.descricao,
+        professional: item.prestador_id,
+        situation: item.situacao_id
+      }]
+      setData(data => data.concat(service))
     })
-  })
+  }
+
+  useEffect(() => {
+    loadService()
+  }, [])
   
   return(
     <View style={styles.container}>
