@@ -12,7 +12,8 @@ export default function servicesRecentsList(props){
   const [data, setData] = useState([])
 
   async function loadService(){
-    const services = await api.get(`servico/${props.user.id}`)
+    const services = await api.get(`servico/${props.user.id}/`)
+    console.log(props.user.id)
     services.data.forEach(item => {
       const service = [{
         id: `${item.id}`,

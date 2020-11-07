@@ -18,7 +18,7 @@ import api from '../services/api'
 
 export default function AddServiceInformations({ navigation, route }){
   
-  const [checked, setChecked] = useState('baixo');
+  const [checked, setChecked] = useState('');
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [idUser, setIdUser] = useState('')
@@ -33,7 +33,6 @@ export default function AddServiceInformations({ navigation, route }){
         const user = jsonValue != null ? JSON.parse(jsonValue) : null;
 
         setIdUser(user.id)
-
         await api.post('servico', {
           nome: title,
           descricao: description,
