@@ -3,6 +3,7 @@ import {View, Text, KeyboardAvoidingView, ScrollView, ToastAndroid} from 'react-
 import {useNavigation} from '@react-navigation/native';
 import {Feather, Entypo} from '@expo/vector-icons'
 import { Item, Input } from 'native-base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -35,7 +36,7 @@ export default function Register(){
 
   async function navigateToNext(){
     try {
-      await api.post('/cliente', {
+      await api.post('/usuario', {
         nome: name,
         sobrenome: lastName,
         email: email,
@@ -45,10 +46,25 @@ export default function Register(){
         rua: street,
         bairro: neighborhood,
         numero: number,
+        senha: password,
+        tipo_usuario: '1'
+      })
+
+
+      const response = await api.post('/sessions', {
+        email: email,
         senha: password
       })
+
+      const jsonValue = JSON.stringify(response.data.user[0])
+      await AsyncStorage.setItem('@user', jsonValue)
+              
       ToastAndroid.show("Conta criada com sucesso!", ToastAndroid.SHORT);
-      navigation.navigate('Home')
+
+      navigation.navigate('Feed', {
+        user: response.data.user[0]
+      })
+      
     } catch (error) {
       console.error(error);
     }

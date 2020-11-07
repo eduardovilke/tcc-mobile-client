@@ -39,7 +39,7 @@ export default function AddServiceInformations({ navigation, route }){
           descricao: description,
           tipos_servico_id: `${route.params.item.id}`,
           situacao_id: "1",
-          cliente_id: idUser
+          cliente_id: `${idUser}`
         })
         navigation.navigate('PageSuccess')
 
