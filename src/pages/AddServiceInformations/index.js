@@ -38,7 +38,7 @@ export default function AddServiceInformations({ navigation, route }){
           descricao: description,
           tipos_servico_id: `${route.params.item.id}`,
           situacao_id: "1",
-          cliente_id: `${idUser}`
+          cliente_id: `${user.id}`
         })
         navigation.navigate('PageSuccess')
 
@@ -85,38 +85,6 @@ export default function AddServiceInformations({ navigation, route }){
           placeholder="Descreva aqui seu problema" 
           onChangeText={setDescription}
         />
-      </View>
-      
-      <Text>Prioridade:</Text>
-      <View style={styles.priorities}>
-        
-        <View style={styles.prioritiesOptions}>
-          <RadioButton
-            value="baixo"
-            status={ checked === 'baixo' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('baixo')}
-          />
-          <Text>Baixo</Text>
-        </View>
-        
-        <View style={styles.prioritiesOptions}>
-          <RadioButton
-            value="medio"
-            status={ checked === 'medio' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('medio')}
-          />
-          <Text>Médio</Text>
-        </View>
-        
-        <View style={styles.prioritiesOptions}>
-          <RadioButton
-            value="alto"
-            status={ checked === 'alto' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('alto')}
-          />
-          <Text>Alto</Text>
-        </View>
-        
       </View>
 
       <TouchableOpacity 

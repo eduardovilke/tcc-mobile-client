@@ -36,7 +36,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    marginTop: 60,
+    marginTop: 100,
     backgroundColor: '#4fb4c8',
     alignItems: 'center',
     justifyContent: 'center',
