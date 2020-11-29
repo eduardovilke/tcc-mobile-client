@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, TouchableOpacity, Text} from 'react-native';
 import {Feather, AntDesign, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 import categoryMap from '../../utils/categoryMap'
@@ -9,21 +10,32 @@ import api from '../services/api'
 
 export default function servicesRecentsList(props){
 
+  const [nameUser, setNameUser] = useState('')
   const [data, setData] = useState([])
 
   async function loadService(){
-    const services = await api.get(`servico/${props.user.id}/`)
-    console.log(props.user.id)
-    services.data.forEach(item => {
+
+    const jsonValue = await AsyncStorage.getItem('@user')
+    const user = jsonValue != null ? JSON.parse(jsonValue) : null;
+    setNameUser(user.nome)
+
+    const services = await api.get(`servico/${user.id}/`)
+    let provider = ''
+    services.data.reverse()
+    for (const item of services.data) {
+      if(item.prestador_id){
+        const responseProvider = await api.get(`usuario/${item.prestador_id}/`)
+        provider = `${responseProvider.data.nome} ${responseProvider.data.sobrenome}` 
+      }
       const service = [{
         id: `${item.id}`,
         category: categoryMap[`${item.tipos_servico_id}`],
         description: item.descricao,
-        professional: item.prestador_id,
+        professional: `${provider}`,
         situation: item.situacao_id
       }]
       setData(data => data.concat(service))
-    })
+    }
   }
 
   useEffect(() => {
@@ -34,7 +46,7 @@ export default function servicesRecentsList(props){
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>
-          Bem Vind@! {props.user.nome}
+          Bem Vind@! {nameUser}
         </Text>
         <Text style={styles.subTitle}>
             Aqui estão suas conversas recentes
@@ -64,13 +76,23 @@ export default function servicesRecentsList(props){
             <Text style={styles.serviceValue}>{item.description}</Text>
 
             <Text style={styles.serviceProperty}>Profissional</Text>
-            <Text style={styles.serviceValue}>{item.professional}</Text>
-            <TouchableOpacity 
-              style={styles.detailsButton} 
-            >
-              <Text style={styles.detailsButtonText} >Chat</Text>
-              <Feather name="arrow-right" size={17} color="#4fb4c8"/>
-            </TouchableOpacity>
+            {
+              (item.professional)
+              ? <Text style={styles.serviceValue}>{item.professional}</Text>
+              : <Text style={styles.serviceValue}>Aguardando...</Text>
+            }
+            
+            {
+              (item.professional)
+              ? <TouchableOpacity 
+                style={styles.detailsButton} 
+                >
+                  <Text style={styles.detailsButtonText} >Ver informações</Text>
+                  <Feather name="arrow-right" size={17} color="#4fb4c8"/>
+                </TouchableOpacity>
+              : <View></View>
+            }
+            
           </View>
           
         )}
