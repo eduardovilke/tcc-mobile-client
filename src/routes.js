@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Register2 from './pages/Register2';
 import Feed from './pages/Feed';
 
+import ServicesRecentListStackScreen from './ServicesRecentListStackScreen';
 import AddServiceStackScreen from './AddServiceStackScreen';
 
 const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ export default function Routes() {
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Register2" component={Register2}/>
         <Stack.Screen name="Feed" component={Feed}/>
+        <Stack.Screen name="ServicesRecentListStackScreen" component={ServicesRecentListStackScreen}/>
         <Stack.Screen name="AddServiceCategory" component={AddServiceStackScreen}/>
       </Stack.Navigator>
     </NavigationContainer>

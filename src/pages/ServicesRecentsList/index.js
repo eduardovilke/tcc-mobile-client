@@ -8,13 +8,13 @@ import categoryMap from '../../utils/categoryMap'
 
 import api from '../services/api'
 
-export default function servicesRecentsList(props){
+export default function servicesRecentsList({navigation}){
 
   const [nameUser, setNameUser] = useState('')
   const [data, setData] = useState([])
 
   async function loadService(){
-
+    setData([])
     const jsonValue = await AsyncStorage.getItem('@user')
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
     setNameUser(user.nome)
@@ -31,11 +31,16 @@ export default function servicesRecentsList(props){
         id: `${item.id}`,
         category: categoryMap[`${item.tipos_servico_id}`],
         description: item.descricao,
+        professional_id: item.prestador_id,
         professional: `${provider}`,
         situation: item.situacao_id
       }]
       setData(data => data.concat(service))
     }
+  }
+
+  function navigateToInformations(item){
+    navigation.navigate('ServiceInformation', {item})
   }
 
   useEffect(() => {
@@ -85,7 +90,8 @@ export default function servicesRecentsList(props){
             {
               (item.professional)
               ? <TouchableOpacity 
-                style={styles.detailsButton} 
+                style={styles.detailsButton}
+                onPress={() => navigateToInformations(item)}
                 >
                   <Text style={styles.detailsButtonText} >Ver informações</Text>
                   <Feather name="arrow-right" size={17} color="#4fb4c8"/>
