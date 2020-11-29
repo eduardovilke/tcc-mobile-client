@@ -18,23 +18,23 @@ export default function AddServiceCategory({ navigation }){
 
   const categories = [
     {
-      id: 1,
+      id: "1",
       nome: 'Serviços hidráulicos'
     },
     {
-      id: 2,
+      id: "2",
       nome: 'Serviços elétricos'
     },
     {
-      id: 3,
+      id: "3",
       nome: 'Jardinagem'
     },
     {
-      id: 4,
+      id: "4",
       nome: 'Pequenas pinturas'
     },
     {
-      id: 5,
+      id: "5",
       nome: 'Troca de fechaduras'
     }
   ]
