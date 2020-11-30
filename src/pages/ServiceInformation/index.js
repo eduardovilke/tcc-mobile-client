@@ -18,7 +18,6 @@ export default function ServiceInformation({ navigation, route }){
   }
   
   async function loadProvider(){
-    console.log(route.params.item)
     try {
       const response = await api.get(`usuario/${route.params.item.professional_id}`)
       setNameClient(response.data.nome)
@@ -31,6 +30,10 @@ export default function ServiceInformation({ navigation, route }){
   
   function sendWhatsapp(){
     Linking.openURL(`whatsapp://send?phone=55${phone}&text=Ola`);
+  }
+
+  function rating(){
+    navigation.navigate('ServiceRating', route.params.item.id)
   }
 
   useEffect(() => {
@@ -54,14 +57,14 @@ export default function ServiceInformation({ navigation, route }){
           Título
         </Text>
         <Text styles={styles.titleAbout}>
-            {route.params.item.name}
+          {route.params.item.category}
         </Text>
 
         <Text style={styles.description}>
           Informações         
         </Text>
         <Text styles={styles.descriptionAbout}>
-          
+          {route.params.item.description}
         </Text>
 
         <Text style={styles.client}>
@@ -73,10 +76,10 @@ export default function ServiceInformation({ navigation, route }){
 
         <View style={styles.buttons}>
           {
-            (route.params.item.situation != 1)
+            (route.params.item.situation == 2 )
             ? <TouchableOpacity 
-            style={styles.getService}
-                
+                style={styles.getService}
+                onPress={rating}
               >
                 <Text style={styles.textGetService}>
                   Avaliar
