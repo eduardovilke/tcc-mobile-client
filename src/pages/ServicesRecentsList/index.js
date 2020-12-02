@@ -21,7 +21,6 @@ export default function servicesRecentsList({navigation}){
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
     setNameUser(user.nome)
 
-    setLoading(true)
     const services = await api.get(`servico/${user.id}/`)
     let provider = ''
     services.data.reverse()
