@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, FlatList, TouchableOpacity, Text} from 'react-native';
 import {Feather, AntDesign, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ShimmerEffect from '../ShimmerEffect/index'
 
 import styles from './styles';
 import categoryMap from '../../utils/categoryMap'
@@ -12,6 +13,7 @@ export default function servicesRecentsList({navigation}){
 
   const [nameUser, setNameUser] = useState('')
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
 
   async function loadService(){
     setData([])
@@ -19,6 +21,7 @@ export default function servicesRecentsList({navigation}){
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
     setNameUser(user.nome)
 
+    setLoading(true)
     const services = await api.get(`servico/${user.id}/`)
     let provider = ''
     services.data.reverse()
@@ -36,6 +39,7 @@ export default function servicesRecentsList({navigation}){
         situation: item.situacao_id
       }]
       setData(data => data.concat(service))
+      setLoading(false)
     }
   }
 
@@ -43,9 +47,10 @@ export default function servicesRecentsList({navigation}){
     navigation.navigate('ServiceInformation', {item})
   }
 
-  useEffect(() => {
-    loadService()
-  }, [])
+  useEffect(
+    () => navigation.addListener('focus', () => loadService()), 
+    []
+  )
   
   return(
     <View style={styles.container}>
@@ -57,52 +62,56 @@ export default function servicesRecentsList({navigation}){
             Aqui estão suas conversas recentes
         </Text>
       </View>
+      {
+        (loading)
+        ? <ShimmerEffect />
+        : <FlatList
+            data={data}
+            style={styles.serviceList}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item: item}) => (
+              <View style={styles.service}>
+                <Text style={styles.serviceProperty}>Categoria</Text>
+                  <View style={styles.categorySituation}> 
+                    <Text style={styles.serviceValue}>{item.category}</Text>
 
-      <FlatList
-        data={data}
-        style={styles.serviceList}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item: item}) => (
-          <View style={styles.service}>
-            <Text style={styles.serviceProperty}>Categoria</Text>
-              <View style={styles.categorySituation}> 
-                <Text style={styles.serviceValue}>{item.category}</Text>
+                    { 
+                      (item.situation == 3) 
+                      ? <AntDesign name="check" size={30} color="green" />
+                      : (item.situation == 1) ? <MaterialCommunityIcons name="calendar-clock" size={30} color="#d6d2c9" />
+                      : <FontAwesome5 name="calendar-check" size={28} color="#f7c325" />
+                    } 
+                    
+                  </View>
+                
+                <Text style={styles.serviceProperty}>Descrição</Text>
+                <Text style={styles.serviceValue}>{item.description}</Text>
 
-                { 
-                  (item.situation == 3) 
-                  ? <AntDesign name="check" size={30} color="green" />
-                  : (item.situation == 1) ? <MaterialCommunityIcons name="calendar-clock" size={30} color="#d6d2c9" />
-                  : <FontAwesome5 name="calendar-check" size={28} color="#f7c325" />
-                } 
+                <Text style={styles.serviceProperty}>Profissional</Text>
+                {
+                  (item.professional)
+                  ? <Text style={styles.serviceValue}>{item.professional}</Text>
+                  : <Text style={styles.serviceValue}>Aguardando...</Text>
+                }
+                
+                {
+                  (item.professional)
+                  ? <TouchableOpacity 
+                    style={styles.detailsButton}
+                    onPress={() => navigateToInformations(item)}
+                    >
+                      <Text style={styles.detailsButtonText} >Ver informações</Text>
+                      <Feather name="arrow-right" size={17} color="#4fb4c8"/>
+                    </TouchableOpacity>
+                  : <View></View>
+                }
                 
               </View>
-            
-            <Text style={styles.serviceProperty}>Descrição</Text>
-            <Text style={styles.serviceValue}>{item.description}</Text>
-
-            <Text style={styles.serviceProperty}>Profissional</Text>
-            {
-              (item.professional)
-              ? <Text style={styles.serviceValue}>{item.professional}</Text>
-              : <Text style={styles.serviceValue}>Aguardando...</Text>
-            }
-            
-            {
-              (item.professional)
-              ? <TouchableOpacity 
-                style={styles.detailsButton}
-                onPress={() => navigateToInformations(item)}
-                >
-                  <Text style={styles.detailsButtonText} >Ver informações</Text>
-                  <Feather name="arrow-right" size={17} color="#4fb4c8"/>
-                </TouchableOpacity>
-              : <View></View>
-            }
-            
-          </View>
-          
-        )}
-      />
+              
+            )}
+          />
+      }
+      
     </View>
   )
 }
