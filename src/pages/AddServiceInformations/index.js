@@ -40,12 +40,10 @@ export default function AddServiceInformations({ navigation, route }){
           situacao_id: "1",
           cliente_id: `${user.id}`
         })
-        navigation.navigate('PageSuccess')
-
+        navigation.navigate('ServicesRecentList')
       } catch (error) {
         console.log(error)
         ToastAndroid.show("Houve algum problema. Contate o suporte.", ToastAndroid.SHORT);
-
       }
     }
   }
