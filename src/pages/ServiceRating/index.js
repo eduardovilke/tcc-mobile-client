@@ -1,34 +1,26 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
 import { Textarea } from 'native-base';
 
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 import styles from './styles'
 
 import api from '../services/api'
 
 export default function ServiceRating({ navigation, route }){
-  console.log(route.params)
   const [rating, setRating] = useState('')
   const [description, setDescription] = useState('')
-  // const [lastNameClient, setLastNameClient] = useState('')
-  // const [phone, setPhone] = useState('')
-
-  // function navigateToBack(){
-  //   navigation.navigate('ServicesRecentList')
-  // }
   
   async function saveRating(){
     try {
-      const response = await api.put(`servico/${route.params}`,{
+      await api.put(`servico/${route.params}`,{
         nota_avaliacao: `${rating}`,
         descricao_avaliacao: `${description}`,
         situacao_id: "3"
       })
-      console.log(response)
+      navigation.navigate('ServicesRecentList')
     } catch (error) {
       console.log(error)
     }
