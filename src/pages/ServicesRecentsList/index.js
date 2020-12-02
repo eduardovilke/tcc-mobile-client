@@ -40,6 +40,9 @@ export default function servicesRecentsList({navigation}){
       setData(data => data.concat(service))
       setLoading(false)
     }
+    if(data.length == 0 ){
+      setLoading(false)
+    }
   }
 
   function navigateToInformations(item){
@@ -58,13 +61,13 @@ export default function servicesRecentsList({navigation}){
           Bem Vind@! {nameUser}
         </Text>
         <Text style={styles.subTitle}>
-            Aqui estão suas conversas recentes
+            Aqui estão suas solicitações recentes
         </Text>
       </View>
       {
         (loading)
         ? <ShimmerEffect />
-        : <FlatList
+        : (data) ? <FlatList
             data={data}
             style={styles.serviceList}
             showsVerticalScrollIndicator={false}
@@ -109,6 +112,7 @@ export default function servicesRecentsList({navigation}){
               
             )}
           />
+        : <View></View>
       }
       
     </View>
