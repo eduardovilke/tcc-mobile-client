@@ -72,10 +72,15 @@ export default function AddServiceInformations({ navigation, route }){
       </View>
 
       <Item style={styles.problemTitle}>
-        <Input 
-          placeholder="Ex: Torneira vazando" 
-          onChangeText={setTitle}
-        />
+        {
+          
+          (route.params.item.id == 2) ? <Input placeholder="Ex: Tomada com problema" onChangeText={setTitle} />
+          : (route.params.item.id == 1) ? <Input placeholder="Ex: Torneira vazando" onChangeText={setTitle} />
+          : (route.params.item.id == 3) ? <Input placeholder="Ex: Poda de arvore" onChangeText={setTitle} />
+          : (route.params.item.id == 4) ? <Input placeholder="Ex: Pintar parede" onChangeText={setTitle} />
+          : <Input placeholder="Ex: Troca de fechaduras" onChangeText={setTitle} />
+        }
+        
       </Item>
 
       <View style={styles.problemDescription}>
