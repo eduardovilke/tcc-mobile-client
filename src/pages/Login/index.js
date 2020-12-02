@@ -65,6 +65,7 @@ export default function Login(){
                         style={styles.inputEmail} 
                         placeholder="Ex: maria@gmail.com" 
                         onChangeText={setEmail}
+                        autoCapitalize = 'none'
                     />
                     </Item>
                     <Item style={styles.inputPassword}>

@@ -104,6 +104,7 @@ export default function Register(){
             <Input 
               placeholder="Email"
               onChangeText={setEmail}
+              autoCapitalize = 'none'
             />
           </Item>
 
