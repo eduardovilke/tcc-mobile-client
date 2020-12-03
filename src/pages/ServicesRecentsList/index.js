@@ -25,7 +25,7 @@ export default function servicesRecentsList({navigation}){
     let provider = ''
     services.data.reverse()
     for (const item of services.data) {
-      if(item.prestador_id){
+      if(item.prestador_id > 0){
         const responseProvider = await api.get(`usuario/${item.prestador_id}/`)
         provider = `${responseProvider.data.nome} ${responseProvider.data.sobrenome}` 
       }
