@@ -3,9 +3,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 import ServicesRecentListStackScreen from '../../ServicesRecentListStackScreen';
 import AddServiceStackScreen from '../../AddServiceStackScreen';
+import EditUserStackScreen from '../../EditUserStackScreen'
 
 const ServicesRecentListRoute = () => <ServicesRecentListStackScreen />;
 const AddServiceRoute = () => <AddServiceStackScreen />;
+const EditUserRoute = () => <EditUserStackScreen />;
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -37,7 +39,7 @@ export default function Feed(){
       />
       <Tab.Screen
         name="Minha área"
-        component={ServicesRecentsRoute}
+        component={EditUserRoute}
         options={{
           tabBarIcon: 'account',
         }}

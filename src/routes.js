@@ -11,6 +11,7 @@ import Feed from './pages/Feed';
 
 import ServicesRecentListStackScreen from './ServicesRecentListStackScreen';
 import AddServiceStackScreen from './AddServiceStackScreen';
+import EditUserStackScreen from './EditUserStackScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default function Routes() {
         <Stack.Screen name="Feed" component={Feed}/>
         <Stack.Screen name="ServicesRecentListStackScreen" component={ServicesRecentListStackScreen}/>
         <Stack.Screen name="AddServiceCategory" component={AddServiceStackScreen}/>
+        <Stack.Screen name="EditUserStackScreen" component={EditUserStackScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
