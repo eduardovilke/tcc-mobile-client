@@ -27,6 +27,9 @@ export default function Login(){
 
                 const jsonValue = JSON.stringify(response.data.user[0])
                 await AsyncStorage.setItem('@user', jsonValue)
+
+                const jsonValueToken = JSON.stringify(response.data.token.token)
+                await AsyncStorage.setItem('@token', jsonValueToken)
                         
                 navigation.navigate('Feed', {
                     user: response.data.user[0]
