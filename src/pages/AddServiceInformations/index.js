@@ -18,7 +18,6 @@ import api from '../services/api'
 
 export default function AddServiceInformations({ navigation, route }){
   
-  const [checked, setChecked] = useState('');
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [idUser, setIdUser] = useState('')
@@ -32,6 +31,9 @@ export default function AddServiceInformations({ navigation, route }){
         const jsonValue = await AsyncStorage.getItem('@user')
         const user = jsonValue != null ? JSON.parse(jsonValue) : null;
 
+        const jsonToken = await AsyncStorage.getItem('@token')
+        const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+
         setIdUser(user.id)
         await api.post('servico', {
           nome: title,
@@ -39,7 +41,13 @@ export default function AddServiceInformations({ navigation, route }){
           tipos_servico_id: `${route.params.item.id}`,
           situacao_id: "1",
           cliente_id: `${user.id}`
-        })
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+        )
         navigation.navigate('ServicesRecentList')
       } catch (error) {
         console.log(error)

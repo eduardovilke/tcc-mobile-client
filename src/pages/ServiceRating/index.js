@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { Textarea } from 'native-base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -14,11 +15,19 @@ export default function ServiceRating({ navigation, route }){
   const [description, setDescription] = useState('')
   
   async function saveRating(){
+    const jsonToken = await AsyncStorage.getItem('@token')
+    const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+    
     try {
       await api.put(`servico/${route.params}`,{
         nota_avaliacao: `${rating}`,
         descricao_avaliacao: `${description}`,
         situacao_id: "3"
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
       })
       navigation.navigate('ServicesRecentList')
     } catch (error) {

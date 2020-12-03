@@ -23,8 +23,15 @@ export default function editUserRegister({ navigation }){
     const jsonValue = await AsyncStorage.getItem('@user')
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
 
+    const jsonToken = await AsyncStorage.getItem('@token')
+    const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+
     try {
-      const response = await api.get(`usuario/${user.id}`)
+      const response = await api.get(`usuario/${user.id}`, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        } 
+      })
       setName(response.data.nome)
       setLastName(response.data.sobrenome)
       setEmail(response.data.email)
@@ -36,13 +43,23 @@ export default function editUserRegister({ navigation }){
   async function changeRegister(){
     const jsonValue = await AsyncStorage.getItem('@user')
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
+
+    const jsonToken = await AsyncStorage.getItem('@token')
+    const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+    
     try {
       await api.put(`usuario/${user.id}`, {
         nome: name,
         sobrenome: lastName,
         email: email,
         senha: password
-      })
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
+      )
       navigation.navigate('EditUser')
     } catch (error) {
       console.log(error)

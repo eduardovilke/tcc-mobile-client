@@ -18,8 +18,17 @@ export default function ServiceInformation({ navigation, route }){
   }
   
   async function loadProvider(){
+
+    const jsonToken = await AsyncStorage.getItem('@token')
+    const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+
+
     try {
-      const response = await api.get(`usuario/${route.params.item.professional_id}`)
+      const response = await api.get(`usuario/${route.params.item.professional_id}`, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
       setNameClient(response.data.nome)
       setLastNameClient(response.data.sobrenome)
       setPhone(response.data.telefone)

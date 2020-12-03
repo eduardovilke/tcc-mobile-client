@@ -21,12 +21,23 @@ export default function servicesRecentsList({navigation}){
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
     setNameUser(user.nome)
 
-    const services = await api.get(`servico/${user.id}/`)
+    const jsonToken = await AsyncStorage.getItem('@token')
+    const token = jsonToken != null ? JSON.parse(jsonToken) : null;
+
+    const services = await api.get(`servico/${user.id}/`, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
     let provider = ''
     services.data.reverse()
     for (const item of services.data) {
       if(item.prestador_id > 0){
-        const responseProvider = await api.get(`usuario/${item.prestador_id}/`)
+        const responseProvider = await api.get(`usuario/${item.prestador_id}/`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
         provider = `${responseProvider.data.nome} ${responseProvider.data.sobrenome}` 
       }
       const service = [{
