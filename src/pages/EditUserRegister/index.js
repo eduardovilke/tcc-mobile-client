@@ -37,13 +37,13 @@ export default function editUserRegister({ navigation }){
     const jsonValue = await AsyncStorage.getItem('@user')
     const user = jsonValue != null ? JSON.parse(jsonValue) : null;
     try {
-      const response = await api.put(`usuario/${user.id}`, {
+      await api.put(`usuario/${user.id}`, {
         nome: name,
         sobrenome: lastName,
         email: email,
         senha: password
       })
-      console.log(response)
+      navigation.navigate('EditUser')
     } catch (error) {
       console.log(error)
     }
